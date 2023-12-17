@@ -56,7 +56,7 @@ public class Country {
     @Column(name = "head_of_state", length = 60)
     private String headOfState;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "capital")
     private City city;
 
@@ -80,11 +80,11 @@ public class Country {
         this.code = code;
     }
 
-    public String getCode2() {
+    public String getAlternativeCode() {
         return code2;
     }
 
-    public void setCode2(String code2) {
+    public void setAlternativeCode(String code2) {
         this.code2 = code2;
     }
 
@@ -190,5 +190,13 @@ public class Country {
 
     public void setCity(City city) {
         this.city = city;
+    }
+
+    public Set<CountryLanguage> getLanguages() {
+        return languages;
+    }
+
+    public void setLanguages(Set<CountryLanguage> languages) {
+        this.languages = languages;
     }
 }
