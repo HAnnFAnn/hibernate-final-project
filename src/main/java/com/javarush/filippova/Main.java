@@ -1,19 +1,10 @@
 package com.javarush.filippova;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.javarush.filippova.dao.CityDAO;
-import com.javarush.filippova.dao.CountryDAO;
-import com.javarush.filippova.dao.config.PropertiesSessionFactoryProvider;
+import com.javarush.filippova.dao.redis.CityCountry;
 import com.javarush.filippova.dao.util.Util;
 import com.javarush.filippova.domain.City;
-import io.lettuce.core.RedisClient;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static java.util.Objects.nonNull;
 
 public class Main {
 //    private final SessionFactory sessionFactory;
@@ -38,18 +29,14 @@ public class Main {
 //        mapper = new ObjectMapper();
 //    }
 //
-
-
     public static void main(String[] args) {
        // Main main = new Main();
-        //00000
         Util util = new Util();
-        List<City> allCities = util.fetchData(util);
+        List<City> allCities = util.fetchData();
+        List<CityCountry> preparedData = util.transformData(allCities);
+
+        util.pushToRedis(preparedData);
+
         util.shutdown();
     }
-
-
-
-
-
 }

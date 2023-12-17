@@ -2,7 +2,6 @@ package com.javarush.filippova.dao;
 
 import com.javarush.filippova.domain.Country;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 
 import java.util.List;
 
@@ -14,7 +13,9 @@ public class CountryDAO {
     }
 
     public List<Country> getAll() {
-        Query<Country> query = sessionFactory.getCurrentSession().createQuery("select c from Country c", Country.class);
-        return query.list();
+        return sessionFactory.getCurrentSession()
+                .createQuery("select c from Country c join fetch c.languages", Country.class)
+                .list();
+        //return query.list();
     }
 }
